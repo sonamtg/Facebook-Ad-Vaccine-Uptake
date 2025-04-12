@@ -1,0 +1,16 @@
+assignment,covid_concern_label,conversion
+Control,Extremely concerned,0.1276595744680851
+Control,Moderately concerned,0.10548523206751055
+Control,Not concerned,0.06451612903225806
+Control,Slightly concerned,0.08070175438596491
+Control,Very concerned,0.12580645161290321
+Emotions,Extremely concerned,0.2356687898089172
+Emotions,Moderately concerned,0.1980440097799511
+Emotions,Not concerned,0.12173913043478261
+Emotions,Slightly concerned,0.15384615384615385
+Emotions,Very concerned,0.228486646884273
+Reason,Extremely concerned,0.2534246575342466
+Reason,Moderately concerned,0.1640625
+Reason,Not concerned,0.1865671641791045
+Reason,Slightly concerned,0.16487455197132617
+Reason,Very concerned,0.16374269005847952

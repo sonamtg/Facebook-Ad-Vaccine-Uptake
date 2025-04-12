@@ -38,7 +38,7 @@ baseline_surv <- tibble(
       age <= 25 ~ sample(gender,
                          prob = c(0.44, 0.46, 0.10),
                          size = n(), replace = TRUE),
-      age > 25 & age <= 40 ~ sample(gender,
+      age > 25 & age <= 40  ~ sample(gender,
                          prob = c(0.45, 0.50, 0.05),
                          size = n(), replace = TRUE),
       TRUE ~ sample(gender,
