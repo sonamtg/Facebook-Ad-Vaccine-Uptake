@@ -56,7 +56,7 @@ ggsave(
   dpi = 300
 )
 
-# 2nd Plot: Treatment Uplift Over Control
+# 2nd Plot: Causal Effect of Campaigns on Vaccination
 # - Bar plot showing the additional vaccination percentage gained from each campaign
 # - Compared to the control group baseline
 vax_uplift_plot <- camp_effect_summ %>%
@@ -70,7 +70,8 @@ vax_uplift_plot <- camp_effect_summ %>%
   # Label bars with uplift percentages
   geom_text(aes(label = str_c("+", scales::percent(campaign_uplift, accuracy = 0.1))),
             vjust = -0.5) +
-  labs(title = "Campaign Effectiveness: Vaccination uplift over control",
+  labs(title = "Causal Effect of Campaigns on Vaccination",
+       subtitle = "Uplift over control group",
        x = "",
        y = "Percentage Point Increase") +
   # Format y-axis with "+" signs for positive values
@@ -80,7 +81,7 @@ vax_uplift_plot <- camp_effect_summ %>%
 
 # Save uplift plot
 ggsave(
-  filename = here::here("outputs", "figures", "vaccination_uplift.png"),
+  filename = here("outputs", "figures", "vaccination_uplift.png"),
   bg = "white",
   plot = vax_uplift_plot,
   width = 6,
@@ -108,7 +109,7 @@ conv_rate_covid_plot <- conv_rate_covid %>%
   theme_minimal()
 
 # Save COVID concern plot
-ggsave(filename = here::here("outputs", "figures", "conversion_rate_by_concern.png"),
+ggsave(filename = here("outputs", "figures", "conversion_rate_by_concern.png"),
        plot = conv_rate_covid_plot,
        bg = "white",
        width = 8,
@@ -135,7 +136,7 @@ conv_rate_age_plot <- conv_rate_age %>%
 
 # Save age group plot
 ggsave(
-  filename = here::here("outputs", "figures", "conversion_rate_by_age.png"),
+  filename = here("outputs", "figures", "conversion_rate_by_age.png"),
   bg = "white",
   plot = conv_rate_age_plot,
   width = 8,
@@ -171,7 +172,7 @@ vax_rates_all_particip_tbl <- vax_rates_all_particip %>%
 # Save the vaccination rates table (all participants)
 gtsave(
   data = vax_rates_all_particip_tbl,
-  filename = here::here("outputs", "tables", "vaccination_rates_all.png"),
+  filename = here("outputs", "tables", "vaccination_rates_all.png"),
   zoom = 2  # Improves resolution
 )
 
@@ -201,5 +202,5 @@ vax_rates_init_unvax_tbl <- vax_rates_init_unvax%>%
 # Save the vaccination campaign effectiveness table (initially unvaccinated)
 gtsave(
   data = vax_rates_init_unvax_tbl,
-  filename = here::here("outputs", "tables", "vaccination_rates_initial_unvax.png"),
+  filename = here("outputs", "tables", "vaccination_rates_initial_unvax.png"),
   zoom = 2)

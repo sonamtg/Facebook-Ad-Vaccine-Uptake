@@ -2,43 +2,45 @@
 
 Simulated field experiment to assess the effectiveness of different Facebook ad campaigns in increasing COVID-19 vaccine uptake
 
+
+
 ## How to Run the Pipeline
 
-### 1. First-Time Setup
+### First-Time Setup
 
 ```bash
 git clone https://github.com/sonamtg/Facebook-Ad-Vaccine-Uptake.git
 cd Facebook-Ad-Vaccine-Uptake
 ```
 
-### 2. Initialize the R environment to automatically install all dependencies
+### Initialize the R environment to automatically install all dependencies
 
 ```bash
 Rscript -e "renv::restore()"
 ```
 
-### 3. Run the Entire Pipeline
+### Run the Entire Pipeline
 Execute the master script to run all steps sequentially:
 
 ```bash
 Rscript 00_run.R
 ```
 
-### 4. Run Specific Steps
+### Run Specific Steps
 Edit `00_run.R` to toggle scripts on/off (set 1 = run, 0 = skip)
 
-**00_run.R**
+1. **00_run.R**
 - To run all the scripts
 - Input required and output produced by each script
 
 ### Overview of the logic and methodologies used
 
-**01_baseline_simulation.R** 
+2. **01_baseline_simulation.R** 
 
 #### Demographic Distributions
 
 - Unique IDs (unique_id)
-  - Sequential Uniue IDs starting at 135780 ensure each participant has a distinct identifier
+  - Sequential Unique IDs starting at 135780 ensure each participant has a distinct identifier
   
 - Survey Dates (baseline_date)
   - Uniform distribution across May 1 2021 to May 15, 2021
@@ -74,15 +76,17 @@ Reflects typical public health survey distributions
   - Fixed 18% probability
   - Independent of other factors
 
+#### Facebook Usage
+
 - Facebook Usage (fb_active)
   - Peak daily usage at 26-40 (37%)
   
-**02_treatment_assign.R** 
+3. **02_treatment_assign.R** 
 
 - Randomized Controlled Trial (RCT) using complete randomization using the randomizr package
 - Random assignment: 1/3 receive the first ad (reason), 1/3 the second ad (emotions), and 1/3 none (control group)
 
-**03_endline_simulation.R**
+4. **03_endline_simulation.R**
 
 - Follow-up Period (survey_gap)
   - 14-28 days using Poisson distribution
@@ -97,10 +101,12 @@ Reflects typical public health survey distributions
     
   - Final vaccination status using the binomial distribution function based on their calculated probability
   
-**04_merge_and_process.R**
+5. **04_merge_and_process.R**
 
 - Merge all the datasets together and summarization for figures and tables
 
-**05_gen_output.R**
+6. **05_gen_output.R**
 
 - Produce figures and tables
+
+- The `vaccination_uplift.png` plot shows that the Emotions campaign causally increased vaccination rates by 9.1 percentage points compared to the control group and the Reason campaign increased vaccinations by 7.3 percentage points compared to the control group after accounting for baseline (which includes random) characteristics.
