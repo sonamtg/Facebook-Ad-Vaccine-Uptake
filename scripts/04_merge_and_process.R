@@ -40,7 +40,13 @@ base_assign_end_merged %>%
 # Uses standard age breaks for demographic reporting
 base_assign_end_merged %>%
   filter(vaccinated == 0) %>%
-  group_by(assignment, age_group = cut(age, breaks = c(18, 30, 45, 65, 90), include.lowest = TRUE)) %>%
+  # Include 18 in the first grp
+  # Format as [a,b)
+  mutate(age_group = cut(age, breaks = c(18, 30, 45, 65, 90),
+                                       labels = c("18-29", "30-44", "45-64", "65+"),
+                                       include.lowest = TRUE, right = FALSE) %>%
+  factor(levels = c("18-29", "30-44", "45-64", "65+"))) %>% # Manual ordering
+  group_by(assignment, age_group) %>%
   summarize(conversion = mean(vaccinated_endline)) %>%
   ungroup() %>%
   write_csv(here("data", "cooked", "conversion_rate_by_age.csv"))
