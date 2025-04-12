@@ -7,7 +7,7 @@ set.seed(seed)
 # Load and prepare baseline survey data
 # Keep only needed columns
 baseline_surv <- read_csv(here("data", "raw", "baseline_survey.csv")) %>%
-  select(unique_id, baseline_date, vaccinated, covid_concern_num)
+  select(unique_id, baseline_date, vaccinated, covid_concern_num, education)
 
 # Load treatment assignment information
 assign_info <- read_csv(here("data", "raw", "treatment_assignment.csv"))
@@ -34,10 +34,31 @@ endline_surv <- left_join(baseline_surv, assign_info, by = "unique_id") %>%
 
     # Add treatment effects to probability (ONLY for unvaccinated):
     prob_vaccinated = case_when(
-      vaccinated == 1 ~ 1,  # No change for already vaccinated
-      assignment == "Reason" ~ pmin(base_prob + 0.06, 0.95), # +6% effect
-      assignment == "Emotions" ~ pmin(base_prob + 0.11, 0.95), # +11% effect (stronger)
-      TRUE ~ base_prob  # Control group gets no treatment effect
+      vaccinated == 1 ~ 1,  # Already vaccinated remain vaccinated
+
+      # Overall, stronger effect of Emotion than Reason ad
+      # Reason ads effect (stronger for educated)
+      assignment == "Reason" ~ pmin(
+        base_prob + case_when(
+          education %in% c("College", "More than college") ~ 0.08,  # Strong boost for educated
+          education == "Some college" ~ 0.06, # Moderate effect
+          TRUE ~ 0.04  # Smaller boost for HS or less
+        ),
+        0.95
+      ),
+
+      # Emotional appeals (stronger for less educated)
+      assignment == "Emotions" ~ pmin(
+        base_prob + case_when(
+          education %in% c("Less than HS", "HS") ~ 0.15,  # Strongest for least educated
+          education == "Some college" ~ 0.10, # Medium effect
+          TRUE ~ 0.05  # Smaller boost for college+
+        ),
+        0.95
+      ),
+
+      # Control group (no effect)
+      TRUE ~ base_prob
     ),
 
     # Simulate final vaccination status using binomial distribution
