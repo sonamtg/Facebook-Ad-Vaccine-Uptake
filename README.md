@@ -1,8 +1,3 @@
----
-output:
-  html_document: default
-  pdf_document: default
----
 # Facebook Ad Vaccine Uptake
 
 Simulated field experiment to assess the effectiveness of different Facebook ad campaigns in increasing COVID-19 vaccine uptake
