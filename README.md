@@ -29,9 +29,15 @@ Rscript 00_run.R
 ### Run Specific Steps
 Edit `00_run.R` to toggle scripts on/off (set 1 = run, 0 = skip)
 
+### Simulated Data
+
+base_line_survey.csv - Simulated baseline dataset with demographic and behavioral variables
+treatment_assignment.csv - Randomized campaign assignment (Reason/Emotions/Control) dataset
+endline_survey.csv - Simulated endline outcomes with vaccination status
+
 1. **00_run.R**
 - To run all the scripts
-- Input required and output produced by each script
+- Contains information about the Input required and output produced by each script
 
 ### Overview of the logic and methodologies used
 
